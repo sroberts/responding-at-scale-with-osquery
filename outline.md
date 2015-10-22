@@ -2,9 +2,14 @@
 
 ## Presentation Introduction
 ### Kevin
+- Position: DFIR Engineer
+- Twitter: @sroberts
+- Fun Fact: I know more about StarWars than all of you...
 ### Heroku
 ### Scott
--
+- Position: DFIR Engineer
+- Twitter: @sroberts
+- Fun Fact: I know more about StarWars than all of you...
 ### GitHub
 
 
