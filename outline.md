@@ -30,6 +30,7 @@
 - Building Your Own Packs
 
 ## ? Performance Impact & Testing ?
+- query profiler
 - cgroups
 
 ## Deployment
