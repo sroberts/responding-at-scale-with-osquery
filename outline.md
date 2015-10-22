@@ -33,8 +33,12 @@
 - Advanced Query
 - Joins
 - Real World Query Examples
+- Query Writing Philosophy
+  - Searching for needles in haystacks (Scott) or looking for interesting  haystacks (Kevin)
+- Special Capabilities
+  - Yara
 
-## Intelligence with Packs
+## Managing Intelligence with Packs
 - What Are Packs
 - Why Packs?
 - Building Your Own Packs
@@ -49,6 +53,7 @@
 ## Deployment
 - osquery itself (puppet/chef)
 - configuration management
+  - ad hoc queries
 - Introducing Windmill
 - logging pipeline
 - using those logs
@@ -58,4 +63,6 @@
 ## Resources
 - osquery.io
 
-## Kingsguard (Formerly GoldCloak)
+## Notes/Ideas
+- Kingsguard (Formerly GoldCloak) (If I get it done)
+- Intel Management/Sharing/Generation
