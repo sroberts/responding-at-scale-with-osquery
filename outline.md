@@ -97,6 +97,7 @@ class: inverse
 
 # Special Capabilities
 ## Yara
+## File integrity monitoring
 
 ---
 
