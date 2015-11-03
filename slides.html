@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GitHub Security Onboarding</title>
+    <title>DFIR @scale - osquery</title>
     <meta charset="utf-8">
 
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
@@ -169,9 +169,93 @@ class: inverse
 ---
 
 # Special Capabilities
-## Yara
 ## File Integrity Monitoring
+## Yara
 
+---
+
+# File Integrity Monitoring
+- Specify directory paths and wildcards
+- Creates an inotify watcher
+- Publishes changes to file_events table
+
+---
+
+# File Integrity Monitoring
+## Specify paths to watch
+```javascript
+"file_paths": {
+    "configuration": [
+      "/etc/%%"
+      ],
+    "binaries": [
+      "/usr/bin/%%",
+      "/usr/sbin/%%",
+      "/bin/%%",
+      "/sbin/%%",
+      "/usr/local/bin/%%",
+      "/usr/local/sbin/%%",
+      "/opt/bin/%%",
+      "/opt/sbin/%%"
+    ],
+    "ssh_keys": [
+        "/home/%/.ssh/authorized_keys"
+      ]
+  }
+```
+
+---
+# File Integrity monitoring
+```javascript
+osqueryd[22331]: message=Added kernel listener to: /usr/bin/
+osqueryd[22331]: message=Added kernel listener to: /usr/sbin/
+osqueryd[22331]: message=Added kernel listener to: /bin/
+osqueryd[22331]: message=Added kernel listener to: /sbin/
+osqueryd[22331]: message=Added kernel listener to: /usr/local/bin/
+osqueryd[22331]: message=Added kernel listener to: /usr/local/sbin/
+osqueryd[22331]: message=Added kernel listener to: /opt/bin/
+osqueryd[22331]: message=Added kernel listener to: /opt/sbin/
+osqueryd[22331]: message=Added kernel listener to: /etc/
+osqueryd[22331]: message=Added kernel listener to: /home/
+```
+
+---
+
+# File Integrity Monitoring
+## Write a scheduled query to collect
+```javascript
+"schedule": {
+    "file_events": {
+      "query": "select * from file_events;",
+      "interval": 900,
+      "removed":false
+    }
+  }
+}
+```
+
+---
+# File Integrity monitoring
+```javascript
+{
+  "name": "file_events",
+  "hostIdentifier": "ip-172-31-28-89",
+  "calendarTime": "Tue Nov  3 19:53:38 2015 UTC",
+  "unixTime": "1446580418",
+  "columns": {
+    "action": "CREATED",
+    "category": "configuration",
+    "md5": "d41d8cd98f00b204e9800998ecf8427e",
+    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "slot": "default",
+    "target_path": "/etc/test",
+    "time": "1446579678",
+    "transaction_id": "0"
+  },
+  "action": "added"
+}
+```
 ---
 
 # Managing Intelligence with Packs
@@ -198,6 +282,18 @@ class: inverse
   - Might need to ask Mike/Teddy
 - query profiler
 - cgroups
+
+---
+# cgroups
+## Control Groups: a feature of the linux kernel
+- LXC uses cgroups to do it's work
+- Allows you to segment a group of processes into their own process space or file system
+
+---
+# cgroups
+## Root cgroup - everything runs here
+- by default everything gets 1000 cpu shares
+- smallest you can provide is 2 shares
 
 ---
 
