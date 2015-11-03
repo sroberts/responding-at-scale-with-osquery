@@ -256,6 +256,51 @@ osqueryd[22331]: message=Added kernel listener to: /home/
   "action": "added"
 }
 ```
+
+---
+# Yara
+## A pattern matching syntax for identifying malware
+## osquery can be configured to compare changed files to a set of yara sigs
+## This is a beta feature at this time
+
+---
+# Yara
+## Start by setting up the file paths you want to watch just as before.
+```javascript
+"file_paths": {
+    "binaries": [
+      "/usr/bin/%%",
+      "/usr/sbin/%%",
+      "/bin/%%",
+      "/sbin/%%",
+      "/usr/local/bin/%%",
+      "/usr/local/sbin/%%",
+      "/opt/bin/%%",
+      "/opt/sbin/%%"
+    ]
+  }
+```
+
+---
+# Yara
+## Then tell osquery which files contain yara sigs.
+- Note the key, "binaries" has to be one of the file paths
+```javascript
+"yara": {
+  "signatures": {
+    "group_1": ["/path/file1.sig", "/path/file2.sig"],
+    "group_2": ["/path/file2.sig", "/path/file3.sig"]
+  },
+  "binaries" : ["group_1"]
+}
+```
+
+---
+# Yara
+## Since this is still beta, we aren't using this in production.
+## Only in exploration right now.
+## No idea what performance impact this has on a server.
+
 ---
 
 # Managing Intelligence with Packs
