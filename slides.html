@@ -339,7 +339,26 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 ## Root cgroup - everything runs here
 - by default everything gets 1000 cpu shares
 - smallest you can provide is 2 shares
+- set up during init script
 
+---
+# cgroups
+## Create the cgroups for memory and cpu
+```bash
+cgcreate -g cpu:osquery
+cgcreate -g cpuacct:osquery
+cgcreate -g memory:osquery
+```
+
+---
+# cgroups
+## Set the cpu and memory limits
+```bash
+cgset -r cpu.shares=2 osquery
+cgset -r memory.limit_in_bytes=1073741824
+cgset -r memory.kmem.limit_in_bytes=104857600
+cgset -r memory.kmem.tcp.limit_in_bytes=104857600
+```
 ---
 
 class: inverse
