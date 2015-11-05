@@ -114,19 +114,31 @@ class: center, middle
 
 ---
 
+class: inverse
 ## osquery
 
 ---
 
 # What is osquery?
+## Expose system information via SQL tables
+- users, groups
+- installed packages, kernel modules
+- network communication, file system events
+## Runs scheduled queries of tables
 
 ---
 
 # What problems can osquery solve?
+## Single tool for finding inforation
+## Easy to merge information from information sources
+## Results presented in parsable format
 
 ---
 
 # how do you use osquery
+## Schedule a query
+## Collect the logs
+## Watch for changes
 
 ---
 
@@ -358,6 +370,8 @@ cgset -r cpu.shares=2 osquery
 cgset -r memory.limit_in_bytes=1073741824
 cgset -r memory.kmem.limit_in_bytes=104857600
 cgset -r memory.kmem.tcp.limit_in_bytes=104857600
+
+cgexec -g cpuset:osquery osqueryd
 ```
 ---
 
