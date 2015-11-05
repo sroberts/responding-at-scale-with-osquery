@@ -152,6 +152,18 @@ class: inverse
 
 ---
 
+# osquery configuration
+## JSON configuration file
+- holds the scheduled queries
+- file paths to monitor
+- read from local filesystem, or from https
+## flags file configures administration
+- where do logs go
+- where is the pidfile
+- where to find JSON config file
+
+---
+
 # Query Syntax
 
 ---
@@ -395,6 +407,27 @@ class: inverse
 - using those logs
 - splunk (1/2 slides)
 - elk & elastalert (1/2 slides)
+
+---
+
+# Windmill
+## Heroku and GitHub both use automated builds to create servers
+## Changing a local config file means changing the build.
+## Also tricky to deploy a change to a subset of servers to observe performance.
+- Leads to inconsistent state where servers are not uniform.
+
+---
+
+# Windmill
+## Tool to deliver osquery configurations via https
+## Web GUI for the humans, api for the machines
+<a href="https://github.com/heroku/windmill">https://github.com/heroku/windmill</a>
+---
+
+# Windmill
+## Group osquery endpoints into configuration groups
+## Assign different configurations to those groups
+## Canary deployments
 
 ---
 
