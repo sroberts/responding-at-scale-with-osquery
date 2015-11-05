@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GitHub Security Onboarding</title>
+    <title>DFIR @scale - osquery</title>
     <meta charset="utf-8">
 
     <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
@@ -121,19 +121,31 @@ class: middle
 
 ---
 
+class: inverse
 ## osquery
 
 ---
 
 # What is osquery?
+## Expose system information via SQL tables
+- users, groups
+- installed packages, kernel modules
+- network communication, file system events
+## Runs scheduled queries of tables
 
 ---
 
 # What problems can osquery solve?
+## Single tool for finding inforation
+## Easy to merge information from information sources
+## Results presented in parsable format
 
 ---
 
 # how do you use osquery
+## Schedule a query
+## Collect the logs
+## Watch for changes
 
 ---
 
@@ -144,6 +156,18 @@ class: middle
 
 class: purple
 # osquery use
+
+---
+
+# osquery configuration
+## JSON configuration file
+- holds the scheduled queries
+- file paths to monitor
+- read from local filesystem, or from https
+## flags file configures administration
+- where do logs go
+- where is the pidfile
+- where to find JSON config file
 
 ---
 
@@ -176,8 +200,137 @@ class: purple
 ---
 
 # Special Capabilities
-## Yara
 ## File Integrity Monitoring
+## Yara
+
+---
+
+# File Integrity Monitoring
+- Specify directory paths and wildcards
+- Creates an inotify watcher
+- Publishes changes to file_events table
+
+---
+
+# File Integrity Monitoring
+## Specify paths to watch
+```javascript
+"file_paths": {
+    "configuration": [
+      "/etc/%%"
+      ],
+    "binaries": [
+      "/usr/bin/%%",
+      "/usr/sbin/%%",
+      "/bin/%%",
+      "/sbin/%%",
+      "/usr/local/bin/%%",
+      "/usr/local/sbin/%%",
+      "/opt/bin/%%",
+      "/opt/sbin/%%"
+    ],
+    "ssh_keys": [
+        "/home/%/.ssh/authorized_keys"
+      ]
+  }
+```
+
+---
+# File Integrity monitoring
+```javascript
+osqueryd[22331]: message=Added kernel listener to: /usr/bin/
+osqueryd[22331]: message=Added kernel listener to: /usr/sbin/
+osqueryd[22331]: message=Added kernel listener to: /bin/
+osqueryd[22331]: message=Added kernel listener to: /sbin/
+osqueryd[22331]: message=Added kernel listener to: /usr/local/bin/
+osqueryd[22331]: message=Added kernel listener to: /usr/local/sbin/
+osqueryd[22331]: message=Added kernel listener to: /opt/bin/
+osqueryd[22331]: message=Added kernel listener to: /opt/sbin/
+osqueryd[22331]: message=Added kernel listener to: /etc/
+osqueryd[22331]: message=Added kernel listener to: /home/
+```
+
+---
+
+# File Integrity Monitoring
+## Write a scheduled query to collect
+```javascript
+"schedule": {
+    "file_events": {
+      "query": "select * from file_events;",
+      "interval": 900,
+      "removed":false
+    }
+  }
+}
+```
+
+---
+# File Integrity monitoring
+```javascript
+{
+  "name": "file_events",
+  "hostIdentifier": "ip-172-31-28-89",
+  "calendarTime": "Tue Nov  3 19:53:38 2015 UTC",
+  "unixTime": "1446580418",
+  "columns": {
+    "action": "CREATED",
+    "category": "configuration",
+    "md5": "d41d8cd98f00b204e9800998ecf8427e",
+    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "slot": "default",
+    "target_path": "/etc/test",
+    "time": "1446579678",
+    "transaction_id": "0"
+  },
+  "action": "added"
+}
+```
+
+---
+# Yara
+## A pattern matching syntax for identifying malware
+## osquery can be configured to compare changed files to a set of yara sigs
+## This is a beta feature at this time
+
+---
+# Yara
+## Start by setting up the file paths you want to watch just as before.
+```javascript
+"file_paths": {
+    "binaries": [
+      "/usr/bin/%%",
+      "/usr/sbin/%%",
+      "/bin/%%",
+      "/sbin/%%",
+      "/usr/local/bin/%%",
+      "/usr/local/sbin/%%",
+      "/opt/bin/%%",
+      "/opt/sbin/%%"
+    ]
+  }
+```
+
+---
+# Yara
+## Then tell osquery which files contain yara sigs.
+- Note the key, "binaries" has to be one of the file paths
+```javascript
+"yara": {
+  "signatures": {
+    "group_1": ["/path/file1.sig", "/path/file2.sig"],
+    "group_2": ["/path/file2.sig", "/path/file3.sig"]
+  },
+  "binaries" : ["group_1"]
+}
+```
+
+---
+# Yara
+## Since this is still beta, we aren't using this in production.
+## Only in exploration right now.
+## No idea what performance impact this has on a server.
 
 ---
 
@@ -206,6 +359,39 @@ class: purple
 - query profiler
 - cgroups
 
+---
+# cgroups
+## Control Groups: a feature of the linux kernel
+- LXC uses cgroups to do it's work
+- Allows you to segment a group of processes into their own process space or file system
+
+---
+# cgroups
+## Root cgroup - everything runs here
+- by default everything gets 1000 cpu shares
+- smallest you can provide is 2 shares
+- set up during init script
+
+---
+# cgroups
+## Create the cgroups for memory and cpu
+```bash
+cgcreate -g cpu:osquery
+cgcreate -g cpuacct:osquery
+cgcreate -g memory:osquery
+```
+
+---
+# cgroups
+## Set the cpu and memory limits
+```bash
+cgset -r cpu.shares=2 osquery
+cgset -r memory.limit_in_bytes=1073741824
+cgset -r memory.kmem.limit_in_bytes=104857600
+cgset -r memory.kmem.tcp.limit_in_bytes=104857600
+
+cgexec -g cpuset:osquery osqueryd
+```
 ---
 
 class: purple
