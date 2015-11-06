@@ -13,9 +13,13 @@
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(http://fonts.googleapis.com/css?family=Lobster);
 
       body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
+      h1 {
+        font-family: 'Lobster';
+      }
+      h2, h3 {
         font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
         margin-bottom: 0;
@@ -104,6 +108,7 @@ class: middle
 
 ---
 
+class: middle
 # GitHub
 ## <i class="fa fa-angle-right"></i>_"Making it easiser to work together than alone"_
 ## <i class="fa fa-angle-right"></i>Thousands of Linux Servers in Production & Hundreds of Macs
@@ -111,8 +116,12 @@ class: middle
 ---
 
 class: center, middle
-# <b><i>@Scale</i></b> is a rip off...
+# We ripped off <b><i>@Scale</i></b>...
 ### _But for a good reason..._
+
+???
+
+- @Scale is actually the name of Facebook's Conference series.
 
 ---
 
@@ -134,14 +143,19 @@ class: dark-purple, middle, right
 ---
 
 # What is osquery?
-## Expose system information via SQL tables
+## Expose system information via "SQL tables"
 ### <i class="fa fa-angle-right"></i> users, groups
 ### <i class="fa fa-angle-right"></i> installed packages, kernel modules
 ### <i class="fa fa-angle-right"></i> network communication, file system events
 ## Runs scheduled queries of tables
 
+???
+
+- They aren't actually SQL tables, they're "virtual tables". The DB behind osquery is actually RocksDB.
+
 ---
 
+class: middle
 # The People
 ## <i class="fa fa-facebook-square"></i> Facebook
 ## <i class="fa fa-user"></i> @marpaia
@@ -164,9 +178,9 @@ class: middle
 
 class: middle
 # How do you use osquery
-## <i class="fa fa-angle-right"></i>Schedule a query
-## <i class="fa fa-angle-right"></i>Collect the logs
-## <i class="fa fa-angle-right"></i>Watch for changes
+## <i class="fa fa-angle-right"></i> Schedule a query
+## <i class="fa fa-angle-right"></i> Collect the logs
+## <i class="fa fa-angle-right"></i> Watch for changes
 
 ---
 
@@ -259,8 +273,9 @@ select * from apt_sources;
 
 ---
 
-class: middle
 # Basic Syntax Breakdown
+
+--
 
 ### <i class="fa fa-caret-right"></i> Get all the data columns
 ```sql
@@ -283,7 +298,7 @@ select * from apt_sources;
 ```
 
 # What it means?
-### List all the information about places where apt is pulling software from
+### List all the information about all the sources where apt can download & install software
 
 ---
 
@@ -295,8 +310,9 @@ SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 
 ---
 
-class: middle
 # Advanced Syntax Breakdown
+
+--
 
 ### <i class="fa fa-caret-right"></i> Get the name & and path data
 ```sql
@@ -330,7 +346,16 @@ SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 
 ---
 
+class: middle
 # Joins
+### This is sql syntax after all:
+
+```sql
+SELECT uid, name FROM listening_ports l, processes p WHERE l.pid=p.pid;
+```
+
+# What it means?
+### Get the uid and name from any process with an open listening socket
 
 ---
 
@@ -352,12 +377,29 @@ select * from launchd where path like '%com.apple.launchport.plist';
 ```
 
 ---
-# Query Writing Philosophy
+
+class: middle, center
+# <i class="fa fa-pencil-square"></i> Query Writing Philosophy
+## __Kevin:__ Interesting Haystacks
+## __Scott:__ Interesting Needles
 
 ---
 
-# Searching for:
-## needles in haystacks (Scott) or looking for interesting  haystacks (Kevin)
+class: middle
+# Haystack Approach
+## _Write generalized queries that grab lots of potentially interesting information and sort it out later_
+
+---
+
+class: middle
+# Needle Approach
+## _Write very specific queries looking only for veified indications of compromise and act immediately_
+
+???
+
+- Useful because GitHub is really concerned about Hubber privacy
+- Highly actionable
+- Not useful for anomolies
 
 ---
 
@@ -368,15 +410,16 @@ class: middle
 
 ---
 
+class: middle
 # File Integrity Monitoring
-- Specify directory paths and wildcards
-- Creates an inotify watcher
-- Publishes changes to file_events table
+## <i class="fa  fa-angle-double-right"></i> Specify directory paths and wildcards
+## <i class="fa  fa-angle-double-right"></i> Creates an inotify watcher
+## <i class="fa  fa-angle-double-right"></i> Publishes changes to file_events table
 
 ---
 
-# File Integrity Monitoring
-## Specify paths to watch
+class: middle
+# File Integrity Monitoring: _Paths_
 ```javascript
 "file_paths": {
     "configuration": [
@@ -399,7 +442,9 @@ class: middle
 ```
 
 ---
-# File Integrity monitoring
+
+class: middle
+# File Integrity Monitoring: _Messages_
 ```javascript
 osqueryd[22331]: message=Added kernel listener to: /usr/bin/
 osqueryd[22331]: message=Added kernel listener to: /usr/sbin/
@@ -415,8 +460,8 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 
 ---
 
-# File Integrity Monitoring
-## Write a scheduled query to collect
+class: middle
+# File Integrity Monitoring: _Query_
 ```javascript
 "schedule": {
     "file_events": {
@@ -429,7 +474,10 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 ```
 
 ---
-# File Integrity monitoring
+
+class: middle
+
+# File Integrity Monitoring: _Output_
 ```javascript
 {
   "name": "file_events",
@@ -452,7 +500,11 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 ```
 
 ---
+
+class: middle
+
 # Yara
+###_<i>The pattern matching swiss knife for malware researchers</i>_
 ## <i class="fa fa-chevron-right"></i> A pattern matching syntax for identifying malware
 ## <i class="fa fa-chevron-right"></i> osquery can be configured to compare changed files to a set of yara sigs
 ## <i class="fa fa-chevron-right"></i> This is a beta feature at this time
@@ -462,8 +514,10 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 - Put together by Wesley Shields
 
 ---
+
+class: middle
 # Yara
-## Start by setting up the file paths you want to watch just as before.
+## <i class="fa  fa-angle-double-right"></i> Start by setting up the file paths you want to watch just as before
 ```javascript
 "file_paths": {
     "binaries": [
@@ -480,9 +534,10 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 ```
 
 ---
+
+class: middle
 # Yara
-## Then tell osquery which files contain yara sigs.
-### _Note the key, "binaries" has to be one of the file paths_
+## <i class="fa  fa-angle-double-right"></i> Then tell osquery which files contain yara sigs
 ```javascript
 "yara": {
   "signatures": {
@@ -492,54 +547,90 @@ osqueryd[22331]: message=Added kernel listener to: /home/
   "binaries" : ["group_1"]
 }
 ```
+### <i>_Note the key, "binaries" has to be one of the file paths_</i>
 
 ---
+
+class: middle
 # Yara
-## <i class="fa fa-chevron-right"></i> Since this is still beta, we aren't using this in production
+## <i class="fa fa-chevron-right"></i> This is still beta, Heroku isn't using this in prod
 ## <i class="fa fa-chevron-right"></i> Only in exploration right now
-## <i class="fa fa-chevron-right"></i> No idea what performance impact this has on a server
+## <i class="fa fa-chevron-right"></i> No idea what performance impact this has
 
 ---
 
+class: middle
 # Managing Intelligence with Packs
+## <i class="fa  fa-angle-double-right"></i> _osquery query packs are groups of queries to be added to the osquery schedule_
+## <i class="fa  fa-angle-double-right"></i> Lets you group queries for easier management and distrbution
+## <i class="fa  fa-angle-double-right"></i> Basically a specialized `osquery.conf`
 
 ---
 
-# What Are Packs
-
----
-
+class: middle
 # Why Packs?
+## <i class="fa  fa-angle-double-right"></i> Make use of <i class="fa fa-facebook-square"></i> included intelligence
+## <i class="fa  fa-angle-double-right"></i> Share and collaborate on intelligence
+
 ---
 
+class: middle
 # Building Your Own Packs
+## Basic Template _(stolen from [osquery.io/docs/packs](https://osquery.io/docs/packs/))_
+```javascript
+{
+  "platform": "darwin",
+  "version": "1.1.17",
+  "queries": {
+    "example_query": {
+      "query": "select * from kernel_extensions;",
+      "interval": "86400",
+      "description": "Identifies a systems kext files",
+      "value": "Kext's are a common OSX malware persistence mechanism"
+    }
+  }
+}
+```
+## Extend and add queries to your <i class="fa fa-heart"></i>'s content!
 
 ---
 
+class: middle
 # Using Non-Facebook Packs
+## <i class="fa  fa-angle-double-right"></i> Place on file system
+## <i class="fa  fa-angle-double-right"></i> Point to in config
+## <i class="fa  fa-angle-double-right"></i> ???
+## <i class="fa  fa-angle-double-right"></i> Profit!
 
 ---
 
-## ? Performance Impact & Testing ?
-- heavy queries and how to avoid them
-  - Might need to ask Mike/Teddy
-- query profiler
-- cgroups
+class: middle
+# Performance Impact & Testing
+## heavy queries and how to avoid them
+### <i class="fa  fa-angle-double-right"></i> Might need to ask Mike/Teddy
+## <i class="fa  fa-angle-right"></i> query profiler
+## <i class="fa  fa-angle-right"></i> cgroups
 
 ---
+
+class: middle
 # cgroups
 ## Control Groups: a feature of the linux kernel
-- LXC uses cgroups to do it's work
-- Allows you to segment a group of processes into their own process space or file system
+### <i class="fa  fa-angle-double-right"></i> LXC uses cgroups to do it's work
+### <i class="fa  fa-angle-double-right"></i> Allows you to segment a group of processes into their own process space or file system
 
 ---
+
+class: middle
 # cgroups
 ## Root cgroup - everything runs here
-- by default everything gets 1000 cpu shares
-- smallest you can provide is 2 shares
-- set up during init script
+### <i class="fa  fa-angle-double-right"></i> by default everything gets 1000 cpu shares
+### <i class="fa  fa-angle-double-right"></i> smallest you can provide is 2 shares
+### <i class="fa  fa-angle-double-right"></i> set up during init script
 
 ---
+
+class: middle
 # cgroups
 ## Create the cgroups for memory and cpu
 ```bash
@@ -549,6 +640,8 @@ cgcreate -g memory:osquery
 ```
 
 ---
+
+class: middle
 # cgroups
 ## Set the cpu and memory limits
 ```bash
@@ -566,7 +659,15 @@ class: dark-purple, middle, right
 
 ---
 
-# How Heroku is Using osquery vs How GitHub is Using osquery
+class: middle
+# How Heroku is Using osquery
+## <i class="fa fa-angle-right"></i> LINUX SERVER AND STUFF
+
+---
+
+class: middle
+# How GitHub is Using osquery
+## <i class="fa  fa-angle-right"></i> Very very very work in progress
 
 ---
 
@@ -584,22 +685,24 @@ class: dark-purple, middle, right
 
 ---
 
-class: dark-purple
-## Resources
-- osquery.io
+# Resources
+## <i class="fa fa-angle-right"></i> [osquery.io](https://osquery.io/)
 
 ---
 
-## Notes/Ideas
-- Kingsguard (Formerly GoldCloak) (If I get it done)
-- Intel Management/Sharing/Generation
-
----
-
+class: dark-purple, middle, right
 # Summary
 
 ---
 
+class: middle
+# <i class="fa fa-angle-right"></i> osquery
+# <i class="fa fa-angle-right"></i> osquery use
+# <i class="fa fa-angle-right"></i> osquery use at scale
+
+---
+
+class: dark-purple, middle, right
 # Thanks
 
 
