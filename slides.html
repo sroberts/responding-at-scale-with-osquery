@@ -389,6 +389,10 @@ class: middle
 # Haystack Approach
 ## _Write generalized queries that grab lots of potentially interesting information and sort it out later_
 
+???
+All of our servers are uniform. So one of the things that we look for is something
+that is different from the norm. Are there any kernel mods that are not present on
+all the other servers? Are there any hashes not present across the board?
 ---
 
 class: middle
@@ -416,6 +420,10 @@ class: middle
 ## <i class="fa  fa-angle-double-right"></i> Creates an inotify watcher
 ## <i class="fa  fa-angle-double-right"></i> Publishes changes to file_events table
 
+???
+Heroku uses this as part of our antivirus strategy. In our case, *ANY* change
+to the filesystem is interesting. So we look for changes. We also do lookups
+on hashes but only to get a possible heads up if a hash is malicious.
 ---
 
 class: middle
