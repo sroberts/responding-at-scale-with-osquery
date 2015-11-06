@@ -35,12 +35,12 @@
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
       /* Reverse slide layout */
-      .purple {
+      .dark-purple {
         background-color: #321d83;
         color: #777872;
         text-shadow: 0 0 20px #333;
       }
-      .purple h1, .purple h2, .purple h3 {
+      .dark-purple h1, .dark-purple h2, .dark-purple h3 {
         color: #f3f3f3;
         line-height: 0.8em;
       }
@@ -64,7 +64,7 @@
   <body>
     <textarea id="source">
 
-class: center, middle, purple
+class: center, middle, dark-purple
 
 # Responding @ Scale
 <img src="https://osquery.io/static/site/img/logo.png">
@@ -87,11 +87,11 @@ class: middle
 
 ---
 
-class: center, middle
+class: middle
 # Heroku
-## _"A company that runs apps for you"_
-## Largest PaaS provider
-## Tens of thousands of servers in production
+## <i class="fa fa-angle-right"></i>_"A company that runs apps for you"_
+## <i class="fa fa-angle-right"></i>Largest PaaS provider
+## <i class="fa fa-angle-right"></i>Tens of thousands of Linux servers in production
 
 ---
 
@@ -105,81 +105,217 @@ class: middle
 ---
 
 # GitHub
-## _"Making it easiser to work together than alone"_
+## <i class="fa fa-angle-right"></i>_"Making it easiser to work together than alone"_
+## <i class="fa fa-angle-right"></i>Thousands of Linux Servers in Production & Hundreds of Macs
 
 ---
 
-### Title Explaination
-## @Scale is a rip off... But for a good reason...
+class: center, middle
+# <b><i>@Scale</i></b> is a rip off...
+### _But for a good reason..._
 
 ---
 
+class: middle
 # A Story in Three Parts
-## osquery
-## osquery use
-## osquery use at scale
+## <i class="fa fa-caret-right"></i> osquery
+--
+
+## <i class="fa fa-caret-right"></i> osquery use
+--
+
+## <i class="fa fa-caret-right"></i> osquery use at scale
 
 ---
 
-class: inverse
-## osquery
+class: dark-purple, middle, right
+# <i class="fa fa-caret-right"></i> osquery
 
 ---
 
 # What is osquery?
 ## Expose system information via SQL tables
-- users, groups
-- installed packages, kernel modules
-- network communication, file system events
+### <i class="fa fa-angle-right"></i> users, groups
+### <i class="fa fa-angle-right"></i> installed packages, kernel modules
+### <i class="fa fa-angle-right"></i> network communication, file system events
 ## Runs scheduled queries of tables
 
 ---
 
+# The People
+## <i class="fa fa-facebook-square"></i> Facebook
+## <i class="fa fa-user"></i> @marpaia
+## <i class="fa fa-user"></i> @theopolis
+## <i class="fa fa-users"></i> Along with 63 other people as of this writing...
+
+???
+- Built off of Facebook's BigMac & Etsy's TripYarn tools (Combined as MIDAS)
+- 2420 Total Commits, 1635 Pull Requests
+
+---
+
+class: middle
 # What problems can osquery solve?
-## Single tool for finding inforation
-## Easy to merge information from information sources
-## Results presented in parsable format
+## <i class="fa fa-angle-right"></i> Single tool for finding system information
+## <i class="fa fa-angle-right"></i> Easy to merge information from information sources
+## <i class="fa fa-angle-right"></i> Results presented in multiple parsable format
 
 ---
 
-# how do you use osquery
-## Schedule a query
-## Collect the logs
-## Watch for changes
+class: middle
+# How do you use osquery
+## <i class="fa fa-angle-right"></i>Schedule a query
+## <i class="fa fa-angle-right"></i>Collect the logs
+## <i class="fa fa-angle-right"></i>Watch for changes
 
 ---
 
-# osqueryi vs osqueryd
-## And osqueryctl
+# Out of the Box Tools
+.left-column[
+### osqueryi]
+.right-column[
+## <i class="fa  fa-angle-double-right"></i> osquery's Run, Evaluate, Print, Loop
+## <i class="fa  fa-angle-double-right"></i> Useful for testing & one off checks
+]
 
 ---
 
-class: purple
-# osquery use
+# Out of the Box Tools
+.left-column[
+### osqueryi
+### osqueryd]
+.right-column[
+## <i class="fa  fa-angle-double-right"></i> osquery's Daemon Tool
+## <i class="fa  fa-angle-double-right"></i> Useful for continous detection
+## <i class="fa  fa-angle-double-right"></i> Schedules and runs pre-set queries and writes them to a logger
+## <i class="fa  fa-angle-double-right"></i> Takes some setup (we'll get to that)
+]
 
 ---
 
-# osquery configuration
-## JSON configuration file
-- holds the scheduled queries
-- file paths to monitor
-- read from local filesystem, or from https
-## flags file configures administration
-- where do logs go
-- where is the pidfile
-- where to find JSON config file
+# Out of the Box Tools
+.left-column[
+### osqueryi
+### osqueryd
+### osqueryctl]
+.right-column[
+## <i class="fa  fa-angle-double-right"></i> osquery's System Control Tool
+## <i class="fa  fa-angle-double-right"></i> Turns osqueryd on, gets status, turns it off, etc
+## <i class="fa  fa-angle-double-right"></i> Takes care of system specific stuff (like LaunchAgents, which aren't fun)
+]
 
 ---
 
+class: dark-purple, middle, right
+# <i class="fa fa-caret-right"></i> osquery use
+
+---
+
+# Basic Configuration
+.left-column[
+### osquery.conf
+]
+.right-column[
+## <i class="fa  fa-angle-double-right"></i> JSON configuration file
+## <i class="fa  fa-angle-double-right"></i> holds the scheduled queries
+## <i class="fa  fa-angle-double-right"></i> file paths to monitor
+## <i class="fa  fa-angle-double-right"></i> read from local filesystem or https
+]
+
+---
+
+# Basic Configuration
+.left-column[
+### osquery.conf
+### flags.conf
+]
+.right-column[
+## <i class="fa  fa-angle-double-right"></i> flags file configures administration
+## <i class="fa  fa-angle-double-right"></i> where do logs go
+## <i class="fa  fa-angle-double-right"></i> where is the pidfile
+## <i class="fa  fa-angle-double-right"></i> where to find JSON config file
+]
+
+---
+
+class: middle
 # Query Syntax
 
+```sql
+SELECT columns FROM table WHERE modifier;
+```
+
 ---
 
+class: middle
 # Basic Query
+```sql
+select * from apt_sources
+```
+
+???
+
+- This is a Ubuntu only query.
 
 ---
 
+class: middle
+# Basic Syntax Breakdown
+
+### <i class="fa fa-caret-right"></i> Get all the data columns
+```sql
+SELECT *
+```
+
+--
+
+### <i class="fa fa-caret-right"></i> From the Apt Sources (as in apt-get)  Virtual Table
+```sql
+FROM apt_sources
+```
+
+---
+
+class: middle
 # Advanced Query
+```sql
+SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
+```
+
+---
+
+class: middle
+# Advanced Syntax Breakdown
+
+### <i class="fa fa-caret-right"></i> Get the name & and path data
+```sql
+SELECT name & path
+```
+
+--
+
+### <i class="fa fa-caret-right"></i> From the Kernel Extensions virtual Table
+```sql
+FROM kernel_extensions
+```
+
+--
+
+### <i class="fa fa-caret-right"></i> Where the name field doesn't start with `com.apple`
+```sql
+WHERE name NOT LIKE 'com.apple%'
+```
+
+---
+
+class: middle
+# Advanced Query
+```sql
+SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
+```
+
+# What it means?
+### Get the name, version, & path about any loaded OSX Kernel Extensions that were not created by Apple
 
 ---
 
@@ -199,9 +335,10 @@ class: purple
 
 ---
 
+class: middle
 # Special Capabilities
-## File Integrity Monitoring
-## Yara
+## <i class="fa  fa-chevron-right"></i> File Integrity Monitoring
+## <i class="fa  fa-chevron-right"></i> Yara
 
 ---
 
@@ -394,8 +531,8 @@ cgexec -g cpuset:osquery osqueryd
 ```
 ---
 
-class: purple
-# use osquery at scale
+class: dark-purple, middle, right
+# <i class="fa fa-caret-right"></i> use osquery at scale
 
 ---
 
@@ -417,7 +554,7 @@ class: purple
 
 ---
 
-class: purple
+class: dark-purple
 ## Resources
 - osquery.io
 
