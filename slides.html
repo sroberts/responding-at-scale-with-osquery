@@ -250,7 +250,7 @@ SELECT columns FROM table WHERE modifier;
 class: middle
 # Basic Query
 ```sql
-select * from apt_sources
+select * from apt_sources;
 ```
 
 ???
@@ -273,6 +273,17 @@ SELECT *
 ```sql
 FROM apt_sources
 ```
+
+---
+
+class: middle
+# Basic Query
+```sql
+select * from apt_sources;
+```
+
+# What it means?
+### List all the information about places where apt is pulling software from
 
 ---
 
@@ -324,6 +335,21 @@ SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 ---
 
 # Real World Query Examples
+
+## <i class="fa fa-chevron-right"></i> Detects LoginWindow Persistence Mechanism
+```sql
+select key, subkey, value from preferences where path = '/Library/Preferences/com.apple.loginwindow.plist';
+```
+
+## <i class="fa fa-chevron-right"></i> Detect RAT used by Hacking Team
+```sql
+select * from apps where bundle_identifier = 'com.ht.RCSMac' or bundle_package_type like 'OSAX';
+```
+
+## <i class="fa fa-chevron-right"></i> Detect the Careto Malware LaunchDaemon
+```sql
+select * from launchd where path like '%com.apple.launchport.plist';
+```
 
 ---
 # Query Writing Philosophy
@@ -427,9 +453,13 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 
 ---
 # Yara
-## A pattern matching syntax for identifying malware
-## osquery can be configured to compare changed files to a set of yara sigs
-## This is a beta feature at this time
+## <i class="fa fa-chevron-right"></i> A pattern matching syntax for identifying malware
+## <i class="fa fa-chevron-right"></i> osquery can be configured to compare changed files to a set of yara sigs
+## <i class="fa fa-chevron-right"></i> This is a beta feature at this time
+
+???
+
+- Put together by Wesley Shields
 
 ---
 # Yara
@@ -452,7 +482,7 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 ---
 # Yara
 ## Then tell osquery which files contain yara sigs.
-- Note the key, "binaries" has to be one of the file paths
+### _Note the key, "binaries" has to be one of the file paths_
 ```javascript
 "yara": {
   "signatures": {
@@ -465,9 +495,9 @@ osqueryd[22331]: message=Added kernel listener to: /home/
 
 ---
 # Yara
-## Since this is still beta, we aren't using this in production.
-## Only in exploration right now.
-## No idea what performance impact this has on a server.
+## <i class="fa fa-chevron-right"></i> Since this is still beta, we aren't using this in production
+## <i class="fa fa-chevron-right"></i> Only in exploration right now
+## <i class="fa fa-chevron-right"></i> No idea what performance impact this has on a server
 
 ---
 
