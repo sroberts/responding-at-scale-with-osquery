@@ -1,2 +1,0 @@
-Nov  3 19:38:00 ip-172-31-28-89 osqueryd[22331]: severity=0 location=tls.cpp:196 message=TLS/HTTPS POST request to URI: https://osq.herokuapp.com/api/enroll
-Nov  3 19:38:00 ip-172-31-28-89 osqueryd[22331]: severity=0 location=tls.cpp:196 message=TLS/HTTPS POST request to URI: https://osq.herokuapp.com/api/config

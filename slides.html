@@ -132,7 +132,7 @@ class: middle
 
 class: middle
 # GitHub
-## <i class="fa fa-angle-right"></i> _"Making it easiser to work together than alone"_
+## <i class="fa fa-angle-right"></i> _"Making it easier to work together than alone"_
 ## <i class="fa fa-angle-right"></i> Source code hosting & collaboration (<i class="fa fa-cloud"></i> & <i class="fa fa-building"></i>)
 ## <i class="fa fa-angle-right"></i> Thousands of Linux servers & hundreds of Macs
 
@@ -222,7 +222,7 @@ class: middle
 ### osqueryd]
 .right-column[
 ## <i class="fa fa-angle-right"></i> osquery's Daemon Tool
-## <i class="fa fa-angle-right"></i> Useful for continous detection
+## <i class="fa fa-angle-right"></i> Useful for continuous detection
 ## <i class="fa fa-angle-right"></i> Schedules and runs pre-set queries and writes them to a logger
 ## <i class="fa fa-angle-right"></i> Takes some setup (we'll get to that)
 ]
@@ -404,13 +404,13 @@ all the other servers? Are there any hashes not present across the board?
 
 class: middle
 # Needle Approach
-## _Write very specific queries looking only for veified indications of compromise and act immediately_
+## _Write very specific queries looking only for verified indications of compromise and act immediately_
 
 ???
 
 - Useful because GitHub is really concerned about Hubber privacy
 - Highly actionable
-- Not useful for anomolies
+- Not useful for anomalies
 
 ---
 
@@ -521,7 +521,7 @@ class: middle
 # Yara
 ###_<i>The pattern matching swiss knife for malware researchers</i>_
 ## <i class="fa fa-angle-right"></i> A pattern matching syntax for identifying malware
-## <i class="fa fa-angle-right"></i> osquery can be configured to compare changed files to a set of yara sigs
+## <i class="fa fa-angle-right"></i> osquery can be configured to compare changed files to a set of Yara sigs
 ## <i class="fa fa-angle-right"></i> This is a beta feature at this time
 
 ???
@@ -552,9 +552,9 @@ class: middle
 
 class: middle
 # Yara
-## <i class="fa fa-angle-right"></i> Then tell osquery which files contain yara sigs
+## <i class="fa fa-angle-right"></i> Then tell osquery which files contain Yara sigs
 ```javascript
-"yara": {
+"Yara": {
   "signatures": {
     "group_1": ["/path/file1.sig", "/path/file2.sig"],
     "group_2": ["/path/file2.sig", "/path/file3.sig"]
@@ -604,7 +604,7 @@ class: middle
 class: middle
 # Managing Intelligence with Packs
 ## <i class="fa fa-angle-double-right"></i> _osquery query packs are groups of queries to be added to the osquery schedule_
-## <i class="fa fa-angle-double-right"></i> Lets you group queries for easier management and distrbution
+## <i class="fa fa-angle-double-right"></i> Lets you group queries for easier management and distribution
 ## <i class="fa fa-angle-double-right"></i> Basically a specialized `osquery.conf`
 
 ---
@@ -613,7 +613,7 @@ class: middle
 # Why Packs?
 ## <i class="fa fa-angle-double-right"></i> Make use of <i class="fa fa-facebook-square"></i> included intelligence & management
 ## <i class="fa fa-angle-double-right"></i> Share and collaborate on intelligence
-## <i class="fa fa-angle-double-right"></i> Overall easier management without an unwieldly `osquery.conf`
+## <i class="fa fa-angle-double-right"></i> Overall easier management without an unwieldy `osquery.conf`
 
 ---
 
@@ -658,7 +658,7 @@ class: middle
 
 class: middle
 # cgroups
-## Control Groups: a feature of the linux kernel
+## Control Groups: a feature of the Linux kernel
 ### <i class="fa fa-angle-right"></i> LXC uses cgroups to do it's work
 ### <i class="fa fa-angle-right"></i> Allows you to segment a group of processes into their own process space or file system
 
@@ -712,7 +712,7 @@ class: middle
 # How GitHub is Using osquery
 ## <i class="fa fa-angle-right"></i> Very very very work in progress
 ## osquery on OSX laptops hunting known IOCs
-## osquery on Linux servers hunting known IOCs, anomolies, and doing auditing
+## osquery on Linux servers hunting known IOCs, anomalies, and doing auditing
 
 ---
 
