@@ -85,7 +85,7 @@ background-image: url(http://shankman.com/images/imguploader/images/Introduction
 class: middle
 # Kevin Thompson
 ## <i class="fa fa-building"></i> Incident Responder @ Heroku
-## <i class="fa fa-twitter"></i> @blackfist
+## <i class="fa fa-twitter"></i> @bfist
 ## <i class="fa fa-exclamation-triangle"></i> I know more about WWE than all of you...
 
 ---
@@ -242,7 +242,7 @@ class: dark-purple, middle, right
 ### flags.conf
 ]
 .right-column[
-## <i class="fa  fa-angle-double-right"></i> flags file configures administration
+## <i class="fa  fa-angle-double-right"></i> configures osquery administration
 ## <i class="fa  fa-angle-double-right"></i> where do logs go
 ## <i class="fa  fa-angle-double-right"></i> where is the pidfile
 ## <i class="fa  fa-angle-double-right"></i> where to find JSON config file
@@ -387,6 +387,10 @@ class: middle
 # Haystack Approach
 ## _Write generalized queries that grab lots of potentially interesting information and sort it out later_
 
+???
+All of our servers are uniform. So one of the things that we look for is something
+that is different from the norm. Are there any kernel mods that are not present on
+all the other servers? Are there any hashes not present across the board?
 ---
 
 class: middle
@@ -414,6 +418,10 @@ class: middle
 ## <i class="fa  fa-angle-double-right"></i> Creates an inotify watcher
 ## <i class="fa  fa-angle-double-right"></i> Publishes changes to file_events table
 
+???
+Heroku uses this as part of our antivirus strategy. In our case, *ANY* change
+to the filesystem is interesting. So we look for changes. We also do lookups
+on hashes but only to get a possible heads up if a hash is malicious.
 ---
 
 class: middle
@@ -713,8 +721,27 @@ echo "\nNow check out '/var/log/osquery/osqueryd.results.log' for results."
 
 ---
 
+---
+# Windmill project
+## Configuring many endpoints
+- Earlier mentioned that `osquery.flags` tells `osqueryd` where to find config file
+- That config file can come from an https server.
+
+---
+# Windmill project
+## Developed with love by Heroku and Github
+- open source ruby server
+- organizes endpoints into configuration groups
+
+---
+# Windmill project
+## Focused on safety
+- versioned config files
+- canary deployments
+
 # Resources
 ## <i class="fa fa-angle-right"></i> [osquery.io](https://osquery.io/)
+## <i class="fa fa-angle-right"></i> [windmill](https://github.com/heroku/windmill)
 
 ---
 
