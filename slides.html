@@ -76,10 +76,9 @@ class: center, middle, dark-purple
 
 ---
 
-class: center, middle
+class: center, bottom
 background-image: url(http://shankman.com/images/imguploader/images/Introduction.png)
 # Introductions
-## The Natural, Polite Place to Start
 
 ---
 
@@ -125,7 +124,6 @@ class: center, middle
 
 ---
 
-class: middle
 # A Story in Three Parts
 ## <i class="fa fa-caret-right"></i> osquery
 --
@@ -305,7 +303,7 @@ select * from apt_sources;
 class: middle
 # Advanced Query
 ```sql
-SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
+SELECT name, path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 ```
 
 ---
@@ -316,7 +314,7 @@ SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 
 ### <i class="fa fa-caret-right"></i> Get the name & and path data
 ```sql
-SELECT name & path
+SELECT name, path
 ```
 
 --
@@ -338,7 +336,7 @@ WHERE name NOT LIKE 'com.apple%'
 class: middle
 # Advanced Query
 ```sql
-SELECT name & path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
+SELECT name, path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 ```
 
 # What it means?
@@ -379,7 +377,7 @@ select * from launchd where path like '%com.apple.launchport.plist';
 ---
 
 class: middle, center
-# <i class="fa fa-pencil-square"></i> Query Writing Philosophy
+# Query Writing Philosophy
 ## __Kevin:__ Interesting Haystacks
 ## __Scott:__ Interesting Needles
 
@@ -577,8 +575,9 @@ class: middle
 
 class: middle
 # Why Packs?
-## <i class="fa  fa-angle-double-right"></i> Make use of <i class="fa fa-facebook-square"></i> included intelligence
+## <i class="fa  fa-angle-double-right"></i> Make use of <i class="fa fa-facebook-square"></i> included intelligence & management
 ## <i class="fa  fa-angle-double-right"></i> Share and collaborate on intelligence
+## <i class="fa  fa-angle-double-right"></i> Overall easier management without an unwieldly `osquery.conf`
 
 ---
 
@@ -679,7 +678,36 @@ class: middle
 
 ---
 
-# Deploying osquery itself (puppet/chef)
+# Deploying osquery on Linux (puppet/chef)
+
+---
+
+# Deploying osquery on OSX
+
+```shell
+#!/bin/sh
+set -e
+
+echo "==> Installing osquery (This requires the root password...)"
+curl https://osquery-packages.s3.amazonaws.com/darwin/osquery.pkg > osquery.pkg
+sudo installer -pkg osquery.pkg -target /
+
+echo "==> Setting osquery.conf"
+sudo mkdir -p /var/osquery/
+sudo cp ./osquery.conf.json /var/osquery/osquery.conf
+
+echo "==> Setting the osquery.flags"
+sudo mkdir -p /etc/osquery/
+sudo cp ./osquery.flags.txt /etc/osquery/osquery.flags
+
+echo "==> Cleaning up"
+rm osquery.pkg
+
+echo "==> Start osquery"
+sudo osqueryctl start
+
+echo "\nNow check out '/var/log/osquery/osqueryd.results.log' for results."
+```
 
 ---
 
