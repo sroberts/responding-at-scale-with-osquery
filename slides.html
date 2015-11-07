@@ -51,6 +51,28 @@
         float: right;
         padding-top: 1em;
       }
+
+      pre code {
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        background-color: #333; color: #fff; padding: 1em 2em;
+      }
+      pre code .number, pre code.css .value, pre code.css .value .number { color: #0086F7; font-weight: bold; }
+      pre code .keyword, pre code .keymethods, pre code .tag .title { color: #FB660A; font-weight: bold; }
+      pre code.css .id, pre code .symbol { color: #FB660A; font-weight: normal; }
+      pre code .string, pre code .tag .value { color: #0091E2; }
+      pre code .function, pre code.css .class, pre code .preprocessor { color: #87A558; }
+      pre code .title { color: #DBEC62; font-weight: normal; }
+      pre code .params { color: #87A558; }
+      pre code .literal { }
+      p > code, li > code { padding: 1px 4px; border: 1px solid #CCC; background-color: #EEE; }
+      #slideshow .slide .content code { font-family: 'Inconsololata', monospace; }
+      code { position: relative; }
+      code a.run { position: absolute; top: 10px; right: 10px; }
+      code .function {color: #900;}
+
+
     </style>
   </head>
   <body>
