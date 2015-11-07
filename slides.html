@@ -605,7 +605,7 @@ class: middle
 class: middle
 # Using Non-Facebook Packs
 ## <i class="fa  fa-angle-double-right"></i> Place on file system
-## <i class="fa  fa-angle-double-right"></i> Point to in config
+## <i class="fa  fa-angle-double-right"></i> Point to in `osquery.config`
 ## <i class="fa  fa-angle-double-right"></i> ???
 ## <i class="fa  fa-angle-double-right"></i> Profit!
 
@@ -682,6 +682,7 @@ class: middle
 
 ---
 
+class: middle
 # Deploying osquery on OSX
 ## <i class="fa  fa-angle-right"></i> Deploy the osquery package (or a custom version)
 ## <i class="fa  fa-angle-right"></i> Set `osquery.conf` and/or `osquery.flags`
@@ -694,6 +695,7 @@ class: middle
 
 ---
 
+class: middle
 # Deploying osquery on OSX
 
 ```shell
@@ -723,51 +725,78 @@ echo "\nNow check out '/var/log/osquery/osqueryd.results.log' for results."
 
 ---
 
-# configuration management
-  - ad hoc queries
-- Introducing Windmill
-- logging pipeline
-- using those logs
-- splunk (1/2 slides)
-- elk & elastalert (1/2 slides)
+class: middle
+# Configuring Many Endpoints
+##  <i class="fa  fa-angle-right"></i>Earlier mentioned that `osquery.flags` tells `osqueryd` where to find config file
+## <i class="fa  fa-angle-right"></i> That config file can come from an https server
+
+???
+
+- But that HTTPS server didn't exist... until now!
 
 ---
 
----
-# Windmill project
-## Configuring many endpoints
-- Earlier mentioned that `osquery.flags` tells `osqueryd` where to find config file
-- That config file can come from an https server.
+class: center, middle, dark-purple
+# Introducing Windmill
+## Developed with <i class="fa fa-heart"></i> by Heroku and GitHub
 
 ---
-# Windmill project
-## Developed with love by Heroku and Github
-- open source ruby server
-- organizes endpoints into configuration groups
+
+class: middle
+# Windmill
+## <i class="fa  fa-angle-right"></i> Open source Ruby TLS Configuration Endpoint
+## <i class="fa  fa-angle-right"></i> Organizes endpoints into Configuration Groups
+## <i class="fa  fa-angle-right"></i> Enables intelligent endpoint management
 
 ---
-# Windmill: Configuration groups
+
+class: middle
+# Windmill: Configuration Groups
 ![config group](img/cg.png)
 
 ---
-# Windmill: Configuration groups
+
+class: middle
+# Windmill: Configuration Groups
 ![endpoints](img/endpoint.png)
 
 ---
-# Windmill project
-## Focused on safety
-- versioned config files
-- canary deployments
+
+class: middle
+# Windmill
+## <i class="fa  fa-angle-right"></i> Focused on safety
+### <i class="fa  fa-angle-double-right"></i> versioned config files
+### <i class="fa  fa-angle-double-right"></i> canary deployments
 
 ---
-# Windmill: Canary deploy
+
+class: middle
+# Windmill: Canary Deploy
 ![canary](img/canary.png)
 
 ---
 
+class: middle
+# So... <i>What now?</i>
+## <i class="fa  fa-angle-right"></i> __Transport:__ syslog, logstash forwarder, fluentd, etc
+## <i class="fa  fa-angle-right"></i> __Analysis:__ Splunk, ELK, or a SIEM
+## <i class="fa  fa-angle-right"></i> You have logs now... _GO FIND BAD STUFF!!!_
+
+???
+-
+
+---
+
+class: middle
 # Resources
-## <i class="fa fa-angle-right"></i> [osquery.io](https://osquery.io/)
-## <i class="fa fa-angle-right"></i> [windmill](https://github.com/heroku/windmill)
+## <i class="fa fa-angle-right"></i> [osquery.io](https://osquery.io/),  [facebook/osquery](https://github.com/facebook/osquery), & [osquery-python](https://github.com/osquery/osquery-python)
+## <i class="fa fa-angle-right"></i> [heroku/windmill](https://github.com/heroku/windmill)
+## <i class="fa fa-angle-right"></i> [blackfist/osq_simulator](https://github.com/blackfist/osq_simulator)
+
+???
+
+# Worth adding?
+## <i class="fa fa-angle-right"></i> [mephux/envdb](https://github.com/mephux/envdb)
 
 ---
 
@@ -780,6 +809,16 @@ class: middle
 # <i class="fa fa-angle-right"></i> osquery
 # <i class="fa fa-angle-right"></i> osquery use
 # <i class="fa fa-angle-right"></i> osquery use at scale
+
+???
+- __osquery:__ what it is, who made it, where it came from
+- __osquery use:__ basic installation & use
+- __osquery use at scale:__ how to deploy widely, how to manage configs, how to look at logs
+
+---
+
+class: dark-purple, middle, right
+# Questions?
 
 ---
 
