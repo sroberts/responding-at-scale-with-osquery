@@ -200,9 +200,11 @@ class: middle
 
 class: middle
 # How do you use osquery
-## <i class="fa fa-angle-right"></i> Schedule a query
-## <i class="fa fa-angle-right"></i> Collect the logs
-## <i class="fa fa-angle-right"></i> Watch for changes
+## <i class="fa fa-angle-right"></i> Ad Hoc
+## <i class="fa fa-angle-right"></i> Scheduled
+### <i class="fa fa-angle-double-right"></i> Schedule a query
+### <i class="fa fa-angle-double-right"></i> Collect the logs
+### <i class="fa fa-angle-double-right"></i> Watch for changes
 
 ---
 
@@ -343,7 +345,7 @@ SELECT name, path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 ```
 
 # What it means?
-### Get the name, version, & path about any loaded OSX Kernel Extensions that were not created by Apple
+### Get the name & path about any loaded OSX Kernel Extensions that were not created by Apple
 
 ---
 
@@ -370,12 +372,14 @@ SELECT uid, name FROM listening_ports l, processes p WHERE l.pid=p.pid;
 
 ## <i class="fa fa-angle-right"></i> Detects LoginWindow Persistence Mechanism
 ```sql
-select key, subkey, value from preferences where path = '/Library/Preferences/com.apple.loginwindow.plist';
+select key, subkey, value from preferences where
+path = '/Library/Preferences/com.apple.loginwindow.plist';
 ```
 
 ## <i class="fa fa-angle-right"></i> Detect RAT used by Hacking Team
 ```sql
-select * from apps where bundle_identifier = 'com.ht.RCSMac' or bundle_package_type like 'OSAX';
+select * from apps where bundle_identifier = 'com.ht.RCSMac'
+or bundle_package_type like 'OSAX';
 ```
 
 ## <i class="fa fa-angle-right"></i> Detect the Careto Malware LaunchDaemon
@@ -590,7 +594,7 @@ class: middle
 # osqueryd Configuration
 .left-column[
 ### osquery.conf
-### flags.conf
+### osquery.flags
 ]
 .right-column[
 ## <i class="fa fa-angle-right"></i> configures osquery administration
@@ -655,18 +659,13 @@ class: middle
 
 ---
 
----
-class: middle
-# query profiler
-## A python script that reads your config and rates the queries
-## 1 to 5 rating in CPU, Memory, File I/O.
-## Requires a bit of compiling dependencies
-
 class: middle
 # Query Profiler
-## <i class="fa fa-angle-right"></i> Included with osquery
-## <i class="fa fa-angle-right"></i> Compile by hand
-## <i class="fa fa-angle-right"></i> Grades queries 1-5
+## <i class="fa fa-angle-right"></i> Python script that reads your config & rates queries
+## <i class="fa fa-angle-right"></i> 1 to 5 rating in CPU, Memory, File I/O.
+## <i class="fa fa-angle-right"></i> RequirHow Heroku is Using osquery
+
+es a bit of compiling dependencies
 
 ---
 
@@ -719,9 +718,9 @@ class: dark-purple, middle, right
 class: middle
 # How Heroku is Using osquery
 ## <i class="fa fa-angle-right"></i> Only on the servers
-## Our environment is very uniform
-## Look for things that are not uniform
-## Lookup IOCs just to get a heads up
+## <i class="fa fa-angle-right"></i> Our environment is very uniform
+## <i class="fa fa-angle-right"></i> Look for things that are not uniform
+## <i class="fa fa-angle-right"></i> Lookup IOCs just to get a heads up
 
 ---
 
@@ -733,7 +732,9 @@ class: middle
 
 ---
 
+class: center, middle
 # Deploying osquery on Linux (w/Puppet or Chef)
+### _Ask your friendly neighborhood devops engineer..._
 
 ---
 
@@ -803,18 +804,19 @@ class: center, middle, dark-purple
 class: middle
 # Windmill
 ## <i class="fa fa-angle-right"></i> Open source Ruby TLS Configuration Endpoint
+### <i class="fa fa-angle-double-right"></i> Get it now on <i class="fa fa-github"></i> at [heroku/windmill](https://www.github.com/heroku/windmill)
 ## <i class="fa fa-angle-right"></i> Organizes endpoints into __Configuration Groups__
 ## <i class="fa fa-angle-right"></i> Enables intelligent endpoint management
 
 ---
 
-class: middle
+class: middle, center
 # Windmill: Configuration Groups
 ![config group](img/cg.png)
 
 ---
 
-class: middle
+class: middle, center
 # Windmill: Configuration Groups
 ![endpoints](img/endpoint.png)
 
