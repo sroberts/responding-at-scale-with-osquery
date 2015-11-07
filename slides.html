@@ -14,6 +14,7 @@
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
       @import url(http://fonts.googleapis.com/css?family=Lobster);
+      @import url(https://fonts.googleapis.com/css?family=Inconsolata);
 
       body { font-family: 'Droid Serif'; }
       h1 {
@@ -114,9 +115,9 @@ class: middle
 
 class: middle
 # Heroku
-## <i class="fa fa-angle-right"></i>_"A company that runs apps for you"_
-## <i class="fa fa-angle-right"></i>Largest PaaS provider
-## <i class="fa fa-angle-right"></i>Tens of thousands of Linux servers in production
+## <i class="fa fa-angle-right"></i> _"A company that runs apps for you"_
+## <i class="fa fa-angle-right"></i> Largest PaaS provider
+## <i class="fa fa-angle-right"></i> Tens of thousands of Linux servers in production
 
 ---
 
@@ -131,8 +132,9 @@ class: middle
 
 class: middle
 # GitHub
-## <i class="fa fa-angle-right"></i>_"Making it easiser to work together than alone"_
-## <i class="fa fa-angle-right"></i>Thousands of Linux Servers in Production & Hundreds of Macs
+## <i class="fa fa-angle-right"></i> _"Making it easiser to work together than alone"_
+## <i class="fa fa-angle-right"></i> Source code hosting & collaboration (<i class="fa fa-cloud"></i> & <i class="fa fa-building"></i>)
+## <i class="fa fa-angle-right"></i> Thousands of Linux servers & hundreds of Macs
 
 ---
 
@@ -208,8 +210,8 @@ class: middle
 .left-column[
 ### osqueryi]
 .right-column[
-## <i class="fa  fa-angle-double-right"></i> osquery's Run, Evaluate, Print, Loop
-## <i class="fa  fa-angle-double-right"></i> Useful for testing & one off checks
+## <i class="fa fa-angle-double-right"></i> osquery's Run, Evaluate, Print, Loop
+## <i class="fa fa-angle-double-right"></i> Useful for testing & one off checks
 ]
 
 ---
@@ -219,10 +221,10 @@ class: middle
 ### osqueryi
 ### osqueryd]
 .right-column[
-## <i class="fa  fa-angle-double-right"></i> osquery's Daemon Tool
-## <i class="fa  fa-angle-double-right"></i> Useful for continous detection
-## <i class="fa  fa-angle-double-right"></i> Schedules and runs pre-set queries and writes them to a logger
-## <i class="fa  fa-angle-double-right"></i> Takes some setup (we'll get to that)
+## <i class="fa fa-angle-right"></i> osquery's Daemon Tool
+## <i class="fa fa-angle-right"></i> Useful for continous detection
+## <i class="fa fa-angle-right"></i> Schedules and runs pre-set queries and writes them to a logger
+## <i class="fa fa-angle-right"></i> Takes some setup (we'll get to that)
 ]
 
 ---
@@ -233,9 +235,9 @@ class: middle
 ### osqueryd
 ### osqueryctl]
 .right-column[
-## <i class="fa  fa-angle-double-right"></i> osquery's System Control Tool
-## <i class="fa  fa-angle-double-right"></i> Turns osqueryd on, gets status, turns it off, etc
-## <i class="fa  fa-angle-double-right"></i> Takes care of system specific stuff (like LaunchAgents, which aren't fun)
+## <i class="fa fa-angle-right"></i> osquery's System Control Tool
+## <i class="fa fa-angle-right"></i> Turns osqueryd on, gets status, turns it off, etc
+## <i class="fa fa-angle-right"></i> Takes care of system specific stuff (like LaunchAgents, which aren't fun)
 ]
 
 ---
@@ -245,30 +247,9 @@ class: dark-purple, middle, right
 
 ---
 
-# Basic Configuration
-.left-column[
-### osquery.conf
-]
-.right-column[
-## <i class="fa  fa-angle-double-right"></i> JSON configuration file
-## <i class="fa  fa-angle-double-right"></i> holds the scheduled queries
-## <i class="fa  fa-angle-double-right"></i> file paths to monitor
-## <i class="fa  fa-angle-double-right"></i> read from local filesystem or https
-]
-
----
-
-# Basic Configuration
-.left-column[
-### osquery.conf
-### flags.conf
-]
-.right-column[
-## <i class="fa  fa-angle-double-right"></i> configures osquery administration
-## <i class="fa  fa-angle-double-right"></i> where do logs go
-## <i class="fa  fa-angle-double-right"></i> where is the pidfile
-## <i class="fa  fa-angle-double-right"></i> where to find JSON config file
-]
+class: middle, middle
+# Getting started w/ osqueryi
+![](img/osqueryi.png)
 
 ---
 
@@ -366,6 +347,12 @@ SELECT name, path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
 
 ---
 
+class: middle, center
+# Advanced Query
+![](img/osqueryi-query.png)
+
+---
+
 class: middle
 # Joins
 ### This is sql syntax after all:
@@ -381,17 +368,17 @@ SELECT uid, name FROM listening_ports l, processes p WHERE l.pid=p.pid;
 
 # Real World Query Examples
 
-## <i class="fa fa-chevron-right"></i> Detects LoginWindow Persistence Mechanism
+## <i class="fa fa-angle-right"></i> Detects LoginWindow Persistence Mechanism
 ```sql
 select key, subkey, value from preferences where path = '/Library/Preferences/com.apple.loginwindow.plist';
 ```
 
-## <i class="fa fa-chevron-right"></i> Detect RAT used by Hacking Team
+## <i class="fa fa-angle-right"></i> Detect RAT used by Hacking Team
 ```sql
 select * from apps where bundle_identifier = 'com.ht.RCSMac' or bundle_package_type like 'OSAX';
 ```
 
-## <i class="fa fa-chevron-right"></i> Detect the Careto Malware LaunchDaemon
+## <i class="fa fa-angle-right"></i> Detect the Careto Malware LaunchDaemon
 ```sql
 select * from launchd where path like '%com.apple.launchport.plist';
 ```
@@ -429,16 +416,16 @@ class: middle
 
 class: middle
 # Special Capabilities
-## <i class="fa  fa-chevron-right"></i> File Integrity Monitoring
-## <i class="fa  fa-chevron-right"></i> Yara
+## <i class="fa fa-angle-right"></i> File Integrity Monitoring
+## <i class="fa fa-angle-right"></i> Yara
 
 ---
 
 class: middle
 # File Integrity Monitoring
-## <i class="fa  fa-angle-double-right"></i> Specify directory paths and wildcards
-## <i class="fa  fa-angle-double-right"></i> Creates an inotify watcher
-## <i class="fa  fa-angle-double-right"></i> Publishes changes to file_events table
+## <i class="fa fa-angle-right"></i> Specify directory paths and wildcards
+## <i class="fa fa-angle-right"></i> Creates an inotify watcher
+## <i class="fa fa-angle-right"></i> Publishes changes to file_events table
 
 ???
 Heroku uses this as part of our antivirus strategy. In our case, *ANY* change
@@ -533,9 +520,9 @@ class: middle
 
 # Yara
 ###_<i>The pattern matching swiss knife for malware researchers</i>_
-## <i class="fa fa-chevron-right"></i> A pattern matching syntax for identifying malware
-## <i class="fa fa-chevron-right"></i> osquery can be configured to compare changed files to a set of yara sigs
-## <i class="fa fa-chevron-right"></i> This is a beta feature at this time
+## <i class="fa fa-angle-right"></i> A pattern matching syntax for identifying malware
+## <i class="fa fa-angle-right"></i> osquery can be configured to compare changed files to a set of yara sigs
+## <i class="fa fa-angle-right"></i> This is a beta feature at this time
 
 ???
 
@@ -545,7 +532,7 @@ class: middle
 
 class: middle
 # Yara
-## <i class="fa  fa-angle-double-right"></i> Start by setting up the file paths you want to watch just as before
+## <i class="fa fa-angle-right"></i> Start by setting up the file paths you want to watch just as before
 ```javascript
 "file_paths": {
     "binaries": [
@@ -565,7 +552,7 @@ class: middle
 
 class: middle
 # Yara
-## <i class="fa  fa-angle-double-right"></i> Then tell osquery which files contain yara sigs
+## <i class="fa fa-angle-right"></i> Then tell osquery which files contain yara sigs
 ```javascript
 "yara": {
   "signatures": {
@@ -587,19 +574,46 @@ class: middle
 
 ---
 
+# osqueryd Configuration
+.left-column[
+### osquery.conf
+]
+.right-column[
+## <i class="fa fa-angle-right"></i> JSON configuration file
+## <i class="fa fa-angle-right"></i> holds the scheduled queries
+## <i class="fa fa-angle-right"></i> file paths to monitor
+## <i class="fa fa-angle-right"></i> read from local filesystem or https
+]
+
+---
+
+# osqueryd Configuration
+.left-column[
+### osquery.conf
+### flags.conf
+]
+.right-column[
+## <i class="fa fa-angle-right"></i> configures osquery administration
+## <i class="fa fa-angle-right"></i> where do logs go
+## <i class="fa fa-angle-right"></i> where is the pidfile
+## <i class="fa fa-angle-right"></i> where to find JSON config file
+]
+
+---
+
 class: middle
 # Managing Intelligence with Packs
-## <i class="fa  fa-angle-double-right"></i> _osquery query packs are groups of queries to be added to the osquery schedule_
-## <i class="fa  fa-angle-double-right"></i> Lets you group queries for easier management and distrbution
-## <i class="fa  fa-angle-double-right"></i> Basically a specialized `osquery.conf`
+## <i class="fa fa-angle-double-right"></i> _osquery query packs are groups of queries to be added to the osquery schedule_
+## <i class="fa fa-angle-double-right"></i> Lets you group queries for easier management and distrbution
+## <i class="fa fa-angle-double-right"></i> Basically a specialized `osquery.conf`
 
 ---
 
 class: middle
 # Why Packs?
-## <i class="fa  fa-angle-double-right"></i> Make use of <i class="fa fa-facebook-square"></i> included intelligence & management
-## <i class="fa  fa-angle-double-right"></i> Share and collaborate on intelligence
-## <i class="fa  fa-angle-double-right"></i> Overall easier management without an unwieldly `osquery.conf`
+## <i class="fa fa-angle-double-right"></i> Make use of <i class="fa fa-facebook-square"></i> included intelligence & management
+## <i class="fa fa-angle-double-right"></i> Share and collaborate on intelligence
+## <i class="fa fa-angle-double-right"></i> Overall easier management without an unwieldly `osquery.conf`
 
 ---
 
@@ -626,36 +640,36 @@ class: middle
 
 class: middle
 # Using Non-Facebook Packs
-## <i class="fa  fa-angle-double-right"></i> Place on file system
-## <i class="fa  fa-angle-double-right"></i> Point to in `osquery.config`
-## <i class="fa  fa-angle-double-right"></i> ???
-## <i class="fa  fa-angle-double-right"></i> Profit!
+## <i class="fa fa-angle-double-right"></i> Place on file system
+## <i class="fa fa-angle-double-right"></i> Point to in `osquery.config`
+## <i class="fa fa-angle-double-right"></i> ???
+## <i class="fa fa-angle-double-right"></i> Profit!
 
 ---
 
 class: middle
 # Performance Impact & Testing
 ## heavy queries and how to avoid them
-### <i class="fa  fa-angle-double-right"></i> Might need to ask Mike/Teddy
-## <i class="fa  fa-angle-right"></i> query profiler
-## <i class="fa  fa-angle-right"></i> cgroups
+### <i class="fa fa-angle-double-right"></i> Might need to ask Mike/Teddy
+## <i class="fa fa-angle-right"></i> query profiler
+## <i class="fa fa-angle-right"></i> cgroups
 
 ---
 
 class: middle
 # cgroups
 ## Control Groups: a feature of the linux kernel
-### <i class="fa  fa-angle-double-right"></i> LXC uses cgroups to do it's work
-### <i class="fa  fa-angle-double-right"></i> Allows you to segment a group of processes into their own process space or file system
+### <i class="fa fa-angle-double-right"></i> LXC uses cgroups to do it's work
+### <i class="fa fa-angle-double-right"></i> Allows you to segment a group of processes into their own process space or file system
 
 ---
 
 class: middle
 # cgroups
 ## Root cgroup - everything runs here
-### <i class="fa  fa-angle-double-right"></i> by default everything gets 1000 cpu shares
-### <i class="fa  fa-angle-double-right"></i> smallest you can provide is 2 shares
-### <i class="fa  fa-angle-double-right"></i> set up during init script
+### <i class="fa fa-angle-double-right"></i> by default everything gets 1000 cpu shares
+### <i class="fa fa-angle-double-right"></i> smallest you can provide is 2 shares
+### <i class="fa fa-angle-double-right"></i> set up during init script
 
 ---
 
@@ -696,7 +710,7 @@ class: middle
 
 class: middle
 # How GitHub is Using osquery
-## <i class="fa  fa-angle-right"></i> Very very very work in progress
+## <i class="fa fa-angle-right"></i> Very very very work in progress
 
 ---
 
@@ -706,10 +720,10 @@ class: middle
 
 class: middle
 # Deploying osquery on OSX
-## <i class="fa  fa-angle-right"></i> Deploy the osquery package (or a custom version)
-## <i class="fa  fa-angle-right"></i> Set `osquery.conf` and/or `osquery.flags`
-## <i class="fa  fa-angle-right"></i> Start osqueryd
-## <i class="fa  fa-angle-right"></i> Figure out how to collect logs (or don't!)
+## <i class="fa fa-angle-right"></i> Deploy the osquery package (or a custom version)
+## <i class="fa fa-angle-right"></i> Set `osquery.conf` and/or `osquery.flags`
+## <i class="fa fa-angle-right"></i> Start osqueryd
+## <i class="fa fa-angle-right"></i> Figure out how to collect logs (or don't!)
 
 ???
 
@@ -749,8 +763,8 @@ echo "\nNow check out '/var/log/osquery/osqueryd.results.log' for results."
 
 class: middle
 # Configuring Many Endpoints
-##  <i class="fa  fa-angle-right"></i>Earlier mentioned that `osquery.flags` tells `osqueryd` where to find config file
-## <i class="fa  fa-angle-right"></i> That config file can come from an https server
+##  <i class="fa fa-angle-right"></i> Earlier mentioned that `osquery.flags` tells `osqueryd` where to find config file
+## <i class="fa fa-angle-right"></i> That config file can come from an https server
 
 ???
 
@@ -766,9 +780,9 @@ class: center, middle, dark-purple
 
 class: middle
 # Windmill
-## <i class="fa  fa-angle-right"></i> Open source Ruby TLS Configuration Endpoint
-## <i class="fa  fa-angle-right"></i> Organizes endpoints into Configuration Groups
-## <i class="fa  fa-angle-right"></i> Enables intelligent endpoint management
+## <i class="fa fa-angle-right"></i> Open source Ruby TLS Configuration Endpoint
+## <i class="fa fa-angle-right"></i> Organizes endpoints into __Configuration Groups__
+## <i class="fa fa-angle-right"></i> Enables intelligent endpoint management
 
 ---
 
@@ -786,9 +800,9 @@ class: middle
 
 class: middle
 # Windmill
-## <i class="fa  fa-angle-right"></i> Focused on safety
-### <i class="fa  fa-angle-double-right"></i> versioned config files
-### <i class="fa  fa-angle-double-right"></i> canary deployments
+## <i class="fa fa-angle-right"></i> Focused on safety
+### <i class="fa fa-angle-double-right"></i> versioned config files
+### <i class="fa fa-angle-double-right"></i> canary deployments
 
 ---
 
@@ -800,9 +814,9 @@ class: middle
 
 class: middle
 # So... <i>What now?</i>
-## <i class="fa  fa-angle-right"></i> __Transport:__ syslog, logstash forwarder, fluentd, etc
-## <i class="fa  fa-angle-right"></i> __Analysis:__ Splunk, ELK, or a SIEM
-## <i class="fa  fa-angle-right"></i> You have logs now... _GO FIND BAD STUFF!!!_
+## <i class="fa fa-angle-right"></i> __Transport:__ syslog, logstash forwarder, fluentd, etc
+## <i class="fa fa-angle-right"></i> __Analysis:__ Splunk, ELK, or a SIEM
+## <i class="fa fa-angle-right"></i> You have logs now... _GO FIND BAD STUFF!!!_
 
 ???
 -
