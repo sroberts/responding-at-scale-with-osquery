@@ -138,16 +138,6 @@ class: middle
 
 ---
 
-class: center, middle
-# We ripped off <b><i>@Scale</i></b>...
-### _But for a good reason..._
-
-???
-
-- @Scale is actually the name of Facebook's Conference series.
-
----
-
 # A Story in Three Parts
 ## <i class="fa fa-caret-right"></i> osquery
 --
@@ -180,9 +170,8 @@ class: dark-purple, middle, right
 class: middle
 # The People
 ## <i class="fa fa-facebook-square"></i> Facebook
-## <i class="fa fa-user"></i> @marpaia
-## <i class="fa fa-user"></i> @theopolis
-## <i class="fa fa-users"></i> Along with 63 other people as of this writing...
+## <i class="fa fa-user"></i> @marpaia & @theopolis
+## <i class="fa fa-users"></i> Along with 92 contributors and a community of 221 as of this writing...
 
 ???
 - Built off of Facebook's BigMac & Etsy's TripYarn tools (Combined as MIDAS)
@@ -276,24 +265,6 @@ select * from apt_sources;
 
 ---
 
-# Basic Syntax Breakdown
-
---
-
-### <i class="fa fa-caret-right"></i> Get all the data columns
-```sql
-SELECT *
-```
-
---
-
-### <i class="fa fa-caret-right"></i> From the Apt Sources (as in apt-get) Virtual Table
-```sql
-FROM apt_sources
-```
-
----
-
 class: middle
 # Basic Query
 ```sql
@@ -309,31 +280,6 @@ class: middle
 # Advanced Query
 ```sql
 SELECT name, path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
-```
-
----
-
-# Advanced Syntax Breakdown
-
---
-
-### <i class="fa fa-caret-right"></i> Get the name & and path data
-```sql
-SELECT name, path
-```
-
---
-
-### <i class="fa fa-caret-right"></i> From the Kernel Extensions virtual Table
-```sql
-FROM kernel_extensions
-```
-
---
-
-### <i class="fa fa-caret-right"></i> Where the name field doesn't start with `com.apple`
-```sql
-WHERE name NOT LIKE 'com.apple%'
 ```
 
 ---
@@ -391,27 +337,21 @@ select * from launchd where path like '%com.apple.launchport.plist';
 
 class: middle, center
 # Query Writing Philosophy
-## __Kevin:__ Interesting Haystacks
-## __Scott:__ Interesting Needles
 
----
+## Haystack Approach
+### _Write generalized queries that grab lots of potentially interesting information and sort it out later_
 
-class: middle
-# Haystack Approach
-## _Write generalized queries that grab lots of potentially interesting information and sort it out later_
-
-???
-All of our servers are uniform. So one of the things that we look for is something
-that is different from the norm. Are there any kernel mods that are not present on
-all the other servers? Are there any hashes not present across the board?
----
-
-class: middle
 # Needle Approach
 ## _Write very specific queries looking only for verified indications of compromise and act immediately_
 
 ???
 
+## Haystack
+- All of our servers are uniform. So one of the things that we look for is something
+that is different from the norm. Are there any kernel mods that are not present on
+all the other servers? Are there any hashes not present across the board?
+
+## Needle
 - Useful because GitHub is really concerned about Hubber privacy
 - Highly actionable
 - Not useful for anomalies
@@ -422,159 +362,6 @@ class: middle
 # Special Capabilities
 ## <i class="fa fa-angle-right"></i> File Integrity Monitoring
 ## <i class="fa fa-angle-right"></i> Yara
-
----
-
-class: middle
-# File Integrity Monitoring
-## <i class="fa fa-angle-right"></i> Specify directory paths and wildcards
-## <i class="fa fa-angle-right"></i> Creates an inotify watcher
-## <i class="fa fa-angle-right"></i> Publishes changes to file_events table
-
-???
-Heroku uses this as part of our antivirus strategy. In our case, *ANY* change
-to the filesystem is interesting. So we look for changes. We also do lookups
-on hashes but only to get a possible heads up if a hash is malicious.
----
-
-class: middle
-# File Integrity Monitoring: _Paths_
-```javascript
-"file_paths": {
-    "configuration": [
-      "/etc/%%"
-      ],
-    "binaries": [
-      "/usr/bin/%%",
-      "/usr/sbin/%%",
-      "/bin/%%",
-      "/sbin/%%",
-      "/usr/local/bin/%%",
-      "/usr/local/sbin/%%",
-      "/opt/bin/%%",
-      "/opt/sbin/%%"
-    ],
-    "ssh_keys": [
-        "/home/%/.ssh/authorized_keys"
-      ]
-  }
-```
-
----
-
-class: middle
-# File Integrity Monitoring: _Messages_
-```javascript
-osqueryd[22331]: message=Added kernel listener to: /usr/bin/
-osqueryd[22331]: message=Added kernel listener to: /usr/sbin/
-osqueryd[22331]: message=Added kernel listener to: /bin/
-osqueryd[22331]: message=Added kernel listener to: /sbin/
-osqueryd[22331]: message=Added kernel listener to: /usr/local/bin/
-osqueryd[22331]: message=Added kernel listener to: /usr/local/sbin/
-osqueryd[22331]: message=Added kernel listener to: /opt/bin/
-osqueryd[22331]: message=Added kernel listener to: /opt/sbin/
-osqueryd[22331]: message=Added kernel listener to: /etc/
-osqueryd[22331]: message=Added kernel listener to: /home/
-```
-
----
-
-class: middle
-# File Integrity Monitoring: _Query_
-```javascript
-"schedule": {
-    "file_events": {
-      "query": "select * from file_events;",
-      "interval": 900,
-      "removed":false
-    }
-  }
-}
-```
-
----
-
-class: middle
-
-# File Integrity Monitoring: _Output_
-```javascript
-{
-  "name": "file_events",
-  "hostIdentifier": "ip-172-31-28-89",
-  "calendarTime": "Tue Nov  3 19:53:38 2015 UTC",
-  "unixTime": "1446580418",
-  "columns": {
-    "action": "CREATED",
-    "category": "configuration",
-    "md5": "d41d8cd98f00b204e9800998ecf8427e",
-    "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "slot": "default",
-    "target_path": "/etc/test",
-    "time": "1446579678",
-    "transaction_id": "0"
-  },
-  "action": "added"
-}
-```
-
----
-
-class: middle
-
-# Yara
-###_<i>The pattern matching swiss knife for malware researchers</i>_
-## <i class="fa fa-angle-right"></i> A pattern matching syntax for identifying malware
-## <i class="fa fa-angle-right"></i> osquery can be configured to compare changed files to a set of Yara sigs
-## <i class="fa fa-angle-right"></i> This is a beta feature at this time
-
-???
-
-- Put together by Wesley Shields
-
----
-
-class: middle
-# Yara
-## <i class="fa fa-angle-right"></i> Start by setting up the file paths you want to watch just as before
-```javascript
-"file_paths": {
-    "binaries": [
-      "/usr/bin/%%",
-      "/usr/sbin/%%",
-      "/bin/%%",
-      "/sbin/%%",
-      "/usr/local/bin/%%",
-      "/usr/local/sbin/%%",
-      "/opt/bin/%%",
-      "/opt/sbin/%%"
-    ]
-  }
-```
-
----
-
-class: middle
-# Yara
-## <i class="fa fa-angle-right"></i> Then tell osquery which files contain Yara sigs
-```javascript
-"Yara": {
-  "signatures": {
-    "group_1": ["/path/file1.sig", "/path/file2.sig"],
-    "group_2": ["/path/file2.sig", "/path/file3.sig"]
-  },
-  "binaries" : ["group_1"]
-}
-```
-### <i>_Note the key, "binaries" has to be one of the file paths_</i>
-
----
-
-class: middle
-# Yara
-## <i class="fa fa-chevron-right"></i> This is still beta, Heroku isn't using this in prod
-## <i class="fa fa-chevron-right"></i> Only in exploration right now
-## <i class="fa fa-chevron-right"></i> No idea what performance impact this has
 
 ---
 
@@ -610,102 +397,8 @@ class: middle
 ## <i class="fa fa-angle-double-right"></i> _osquery query packs are groups of queries to be added to the osquery schedule_
 ## <i class="fa fa-angle-double-right"></i> Lets you group queries for easier management and distribution
 ## <i class="fa fa-angle-double-right"></i> Basically a specialized `osquery.conf`
-
----
-
-class: middle
-# Why Packs?
-## <i class="fa fa-angle-double-right"></i> Make use of <i class="fa fa-facebook-square"></i> included intelligence & management
-## <i class="fa fa-angle-double-right"></i> Share and collaborate on intelligence
 ## <i class="fa fa-angle-double-right"></i> Overall easier management without an unwieldy `osquery.conf`
 
----
-
-class: middle
-# Building Your Own Packs
-## Basic Template _(stolen from [osquery.io/docs/packs](https://osquery.io/docs/packs/))_
-```javascript
-{
-  "platform": "darwin",
-  "version": "1.1.17",
-  "queries": {
-    "example_query": {
-      "query": "select * from kernel_extensions;",
-      "interval": "86400",
-      "description": "Identifies a systems kext files",
-      "value": "Kext's are a common OSX malware persistence mechanism"
-    }
-  }
-}
-```
-## Extend and add queries to your <i class="fa fa-heart"></i>'s content!
-
----
-
-class: middle
-# Using Non-Facebook Packs
-## <i class="fa fa-angle-right"></i> Place on file system
-## <i class="fa fa-angle-right"></i> Point to in `osquery.config`
-## <i class="fa fa-angle-right"></i> ???
-## <i class="fa fa-angle-right"></i> Profit!
-
----
-
-class: middle
-# Performance Impact & Testing
-## heavy queries and how to avoid them
-## <i class="fa fa-angle-right"></i> query profiler
-## <i class="fa fa-angle-right"></i> cgroups
-
----
-
-class: middle
-# Query Profiler
-## <i class="fa fa-angle-right"></i> Python script that reads your config & rates queries
-## <i class="fa fa-angle-right"></i> 1 to 5 rating in CPU, Memory, File I/O.
-## <i class="fa fa-angle-right"></i> RequirHow Heroku is Using osquery
-
----
-
-class: middle
-# cgroups
-## Control Groups: a feature of the Linux kernel
-### <i class="fa fa-angle-right"></i> LXC uses cgroups to do it's work
-### <i class="fa fa-angle-right"></i> Allows you to segment a group of processes into their own process space or file system
-
----
-
-class: middle
-# cgroups
-## Root cgroup - everything runs here
-### <i class="fa fa-angle-right"></i> by default everything gets 1000 cpu shares
-### <i class="fa fa-angle-right"></i> smallest you can provide is 2 shares
-### <i class="fa fa-angle-right"></i> set up during init script
-
----
-
-class: middle
-# cgroups
-## Create the cgroups for memory and cpu
-```bash
-cgcreate -g cpu:osquery
-cgcreate -g cpuacct:osquery
-cgcreate -g memory:osquery
-```
-
----
-
-class: middle
-# cgroups
-## Set the cpu and memory limits
-```bash
-cgset -r cpu.shares=2 osquery
-cgset -r memory.limit_in_bytes=1073741824
-cgset -r memory.kmem.limit_in_bytes=104857600
-cgset -r memory.kmem.tcp.limit_in_bytes=104857600
-
-cgexec -g cpuset:osquery osqueryd
-```
 ---
 
 class: dark-purple, middle, right
@@ -713,6 +406,7 @@ class: dark-purple, middle, right
 
 ---
 
+<!-- TODO: Kevin -->
 class: middle
 # How Heroku is Using osquery
 ## <i class="fa fa-angle-right"></i> Only on the servers
@@ -724,59 +418,9 @@ class: middle
 
 class: middle
 # How GitHub is Using osquery
-## <i class="fa fa-angle-right"></i> Very very very work in progress
-## <i class="fa fa-angle-right"></i> osquery on OSX laptops hunting known IOCs
+## <i class="fa fa-angle-right"></i> osquery on OSX laptops hunting known IOCs & verifiying configurations
 ## <i class="fa fa-angle-right"></i> osquery on Linux servers hunting known IOCs, anomalies, and doing auditing
-
----
-
-class: center, middle
-# Deploying osquery on Linux (w/Puppet or Chef)
-### _Ask your friendly neighborhood devops engineer..._
-
----
-
-class: middle
-# Deploying osquery on OSX
-## <i class="fa fa-angle-right"></i> Deploy the osquery package (or a custom version)
-## <i class="fa fa-angle-right"></i> Set `osquery.conf` and/or `osquery.flags`
-## <i class="fa fa-angle-right"></i> Start osqueryd
-## <i class="fa fa-angle-right"></i> Figure out how to collect logs (or don't!)
-
-???
-
-
-
----
-
-class: middle
-# Deploying osquery on OSX
-
-```shell
-#!/bin/sh
-set -e
-
-echo "==> Installing osquery (This requires the root password...)"
-curl https://osquery-packages.s3.amazonaws.com/darwin/osquery.pkg > osquery.pkg
-sudo installer -pkg osquery.pkg -target /
-
-echo "==> Setting osquery.conf"
-sudo mkdir -p /var/osquery/
-sudo cp ./osquery.conf.json /var/osquery/osquery.conf
-
-echo "==> Setting the osquery.flags"
-sudo mkdir -p /etc/osquery/
-sudo cp ./osquery.flags.txt /etc/osquery/osquery.flags
-
-echo "==> Cleaning up"
-rm osquery.pkg
-
-echo "==> Start osquery"
-sudo osqueryctl start
-
-echo "\nNow check out '/var/log/osquery/osqueryd.results.log' for results."
-```
-
+## <i class="fa fa-angle-right"></i> A work in progress with new features coming online often
 ---
 
 class: middle
@@ -791,7 +435,7 @@ class: middle
 ---
 
 class: center, middle, dark-purple
-# Introducing Windmill
+# Windmill
 ## Developed with <i class="fa fa-heart"></i> by Heroku & GitHub
 
 ???
@@ -805,18 +449,7 @@ class: middle
 ### <i class="fa fa-angle-double-right"></i> Get it now on <i class="fa fa-github"></i> at [heroku/windmill](https://www.github.com/heroku/windmill)
 ## <i class="fa fa-angle-right"></i> Organizes endpoints into __Configuration Groups__
 ## <i class="fa fa-angle-right"></i> Enables intelligent endpoint management
-
----
-
-class: middle, center
-# Windmill: Configuration Groups
-![config group](img/cg.png)
-
----
-
-class: middle, center
-# Windmill: Configuration Groups
-![endpoints](img/endpoint.png)
+## <i class="fa fa-angle-right"></i> Recieves and forwards raw logs
 
 ---
 
@@ -845,6 +478,7 @@ class: middle
 
 ---
 
+<!-- TODO: Update -->
 class: middle
 # Resources
 ## <i class="fa fa-angle-right"></i> [osquery.io](https://osquery.io/),  [facebook/osquery](https://github.com/facebook/osquery), & [osquery-python](https://github.com/osquery/osquery-python)
