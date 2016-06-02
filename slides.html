@@ -99,41 +99,25 @@ class: center, middle, dark-purple
 
 ---
 
-class: center, bottom
-background-image: url(http://shankman.com/images/imguploader/images/Introduction.png)
-# Introductions
-
----
-
 class: middle
 # Kevin Thompson
 ## <i class="fa fa-building"></i> Incident Responder @ Heroku
 ## <i class="fa fa-twitter"></i> @bfist
-## <i class="fa fa-exclamation-triangle"></i> I know more about WWE than all of you...
 
----
-
-class: middle
 # Heroku
 ## <i class="fa fa-angle-right"></i> _"A company that runs apps for you"_
-## <i class="fa fa-angle-right"></i> Largest PaaS provider
 ## <i class="fa fa-angle-right"></i> Tens of thousands of Linux servers in production
 
 ---
 
 class: middle
-# Scott
+# Scott J Roberts
 
 ## <i class="fa fa-building"></i> DFIR Engineer @ GitHub
 ## <i class="fa fa-twitter"></i> @sroberts
-## <i class="fa fa-exclamation-triangle"></i> I know more about StarWars than all of you...
 
----
-
-class: middle
 # GitHub
 ## <i class="fa fa-angle-right"></i> _"Making it easier to work together than alone"_
-## <i class="fa fa-angle-right"></i> Source code hosting & collaboration (<i class="fa fa-cloud"></i> & <i class="fa fa-building"></i>)
 ## <i class="fa fa-angle-right"></i> Thousands of Linux servers & hundreds of Macs
 
 ---
@@ -176,24 +160,6 @@ class: middle
 ???
 - Built off of Facebook's BigMac & Etsy's TripYarn tools (Combined as MIDAS)
 - 2420 Total Commits, 1635 Pull Requests
-
----
-
-class: middle
-# What problems can osquery solve?
-## <i class="fa fa-angle-right"></i> Single tool for finding system information
-## <i class="fa fa-angle-right"></i> Easy to merge information from information sources
-## <i class="fa fa-angle-right"></i> Results presented in multiple parsable format
-
----
-
-class: middle
-# How do you use osquery
-## <i class="fa fa-angle-right"></i> Ad Hoc
-## <i class="fa fa-angle-right"></i> Scheduled
-### <i class="fa fa-angle-double-right"></i> Schedule a query
-### <i class="fa fa-angle-double-right"></i> Collect the logs
-### <i class="fa fa-angle-double-right"></i> Watch for changes
 
 ---
 
@@ -245,27 +211,6 @@ class: middle, middle
 ---
 
 class: middle
-# Query Syntax
-
-```sql
-SELECT columns FROM table WHERE modifier;
-```
-
----
-
-class: middle
-# Basic Query
-```sql
-select * from apt_sources;
-```
-
-???
-
-- This is a Ubuntu only query.
-
----
-
-class: middle
 # Basic Query
 ```sql
 select * from apt_sources;
@@ -274,13 +219,9 @@ select * from apt_sources;
 # What it means?
 ### List all the information about all the sources where apt can download & install software
 
----
+???
 
-class: middle
-# Advanced Query
-```sql
-SELECT name, path FROM kernel_extensions WHERE name NOT LIKE 'com.apple%';
-```
+This is a ubuntu specific query.
 
 ---
 
@@ -335,14 +276,15 @@ select * from launchd where path like '%com.apple.launchport.plist';
 
 ---
 
+<!--TODO: This slide is too busy, needs to be cut down -->
 class: middle, center
 # Query Writing Philosophy
 
 ## Haystack Approach
 ### _Write generalized queries that grab lots of potentially interesting information and sort it out later_
 
-# Needle Approach
-## _Write very specific queries looking only for verified indications of compromise and act immediately_
+## Needle Approach
+### _Write very specific queries looking only for verified indications of compromise and act immediately_
 
 ???
 
@@ -362,6 +304,7 @@ class: middle
 # Special Capabilities
 ## <i class="fa fa-angle-right"></i> File Integrity Monitoring
 ## <i class="fa fa-angle-right"></i> Yara
+<!-- TODO: Are there new special capabilties we want to highlight? -->
 
 ---
 
@@ -396,7 +339,6 @@ class: middle
 # Managing Intelligence with Packs
 ## <i class="fa fa-angle-double-right"></i> _osquery query packs are groups of queries to be added to the osquery schedule_
 ## <i class="fa fa-angle-double-right"></i> Lets you group queries for easier management and distribution
-## <i class="fa fa-angle-double-right"></i> Basically a specialized `osquery.conf`
 ## <i class="fa fa-angle-double-right"></i> Overall easier management without an unwieldy `osquery.conf`
 
 ---
@@ -424,9 +366,10 @@ class: middle
 ---
 
 class: middle
-# Configuring Many Endpoints
-##  <i class="fa fa-angle-right"></i> Earlier mentioned that `osquery.flags` tells `osqueryd` where to find config file
+# Managing Many Endpoints
+##  <i class="fa fa-angle-right"></i> Earlier mentioned that `osquery.conf` tells `osqueryd` where to find config file
 ## <i class="fa fa-angle-right"></i> That config file can come from an https server
+## <i class="fa fa-angle-right"></i> The same server can receive logs as well
 
 ???
 
@@ -484,7 +427,8 @@ class: middle
 ## <i class="fa fa-angle-right"></i> [osquery.io](https://osquery.io/),  [facebook/osquery](https://github.com/facebook/osquery), & [osquery-python](https://github.com/osquery/osquery-python)
 ## <i class="fa fa-angle-right"></i> [heroku/windmill](https://github.com/heroku/windmill)
 ## <i class="fa fa-angle-right"></i> [blackfist/osq_simulator](https://github.com/blackfist/osq_simulator)
-
+## Also
+### [mwielgoszewski/doorman](https://github.com/mwielgoszewski/doorman), [mephux/kolide](https://github.com/mephux/kolide)
 ???
 
 # Worth adding?
