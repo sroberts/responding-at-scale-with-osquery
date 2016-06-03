@@ -1,4 +1,4 @@
-# Responding @ Scale: Using osquery for Mass Incident Detection & Response - A Talk at BSidesDFW 2015
+# Responding @ Scale: Using osquery for Mass Incident Detection & Response - A Talk at SANS DFIR Summit 2016 
 
 ## Directions
 
@@ -37,6 +37,4 @@ Scott J Roberts works for GitHub and makes up his title every time he’s asked,
 
 ### Where/when presented previously
 
-Never, this is brand new hotness.
-
-Thanks for the consideration. I've really enjoyed the last two years of BSidesDFW and look forward to this next year.
+This presentation was originally given in a longer form at the amazing [BSidesDFW 2015](http://www.securitybsides.com/w/page/96312090/BSidesDFW%202015) in Dallas Texas. We've since learned a lot about what works and what doesn't with osquery and what it takes to get started effectively.
